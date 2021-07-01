@@ -31,14 +31,17 @@
                 <thead>
                     <th>Nome</th>
                     <th>Preço</th>
-                    <th width="100">Ações</th>
+                    <th width="200">Ações</th>
                 </thead>
                 <tbody>
                     @foreach ($plans as $plan)
                         <tr>
                             <td>{{$plan->name}}</td>
                             <td>R${{number_format($plan->price, 2, ',', '.')}}</td>
-                            <td><a href="{{route('plans.show', $plan->url)}}" class="btn btn-warning">Ver</a></td>
+                            <td>
+                                <a href="{{route('plans.show', $plan->url)}}" class="btn btn-warning">Ver</a>
+                                <a href="{{route('plans.edit', $plan->url)}}" class="btn btn-secondary">Editar</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
