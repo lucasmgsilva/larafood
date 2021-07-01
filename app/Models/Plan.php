@@ -12,12 +12,8 @@ class Plan extends Model
     protected $fillable = ['name', 'url', 'price', 'description'];
 
     public function search($filter = null){        
-        if(!$filter){
-            return redirect()->route('plans.index');
-        }
-        
-        $plans = $this->where('name', 'LIKE', "%{$filter}%")->orWhere('description', 'LIKE', "%{$filter}%")->paginate(1);
-        
+        $plans = $this->where('name', 'LIKE', "%{$filter}%")->orWhere('description', 'LIKE', "%{$filter}%")->paginate();
+
         return $plans;
     }
 }
