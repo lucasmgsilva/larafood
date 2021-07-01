@@ -3,6 +3,13 @@
 @section('title', 'Planos')
 
 @section('content_header')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('plans.index')}}">Planos</a></li>
+        </ol>
+    </nav>
+
     <h1>Planos</h1>
 @stop
 
