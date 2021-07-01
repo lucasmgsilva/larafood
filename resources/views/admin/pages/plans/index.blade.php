@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-    <a href="{{route('plans.create')}}" class="btn btn-danger">Novo</a>
+    <a href="{{route('plans.create')}}" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Adicionar</a>
 
     <div class="card">
         <div class="card-header">
