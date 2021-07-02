@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateDetailPlanController;
 use App\Http\Requests\StoreUpdatePlanRequest;
 use App\Models\DetailPlan;

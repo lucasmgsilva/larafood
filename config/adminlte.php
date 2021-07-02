@@ -253,6 +253,12 @@ return [
             'icon' => 'fas fa-address-book',
             //'can'  => 'manage-blog',
         ],
+        [
+            'text' => 'Permissões',
+            'url'  => 'admin/permissions',
+            'icon' => 'fas fa-lock',
+            //'can'  => 'manage-blog',
+        ],
         /*[
             'text' => 'blog',
             'url'  => 'admin/blog',
