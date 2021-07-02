@@ -30,6 +30,8 @@ Route::prefix('admin')->group(function () {
     Route::post('plans/{url}/details', [DetailPlanController::class, 'store'])->name('details.plan.store');
     Route::get('plans/{url}/details/{id}/edit', [DetailPlanController::class, 'edit'])->name('details.plan.edit');
     Route::put('plans/{url}/details/{id}', [DetailPlanController::class, 'update'])->name('details.plan.update');
+    Route::get('plans/{url}/details/{id}', [DetailPlanController::class, 'show'])->name('details.plan.show');
+    Route::delete('plans/{url}/details/{id}', [DetailPlanController::class, 'destroy'])->name('details.plan.destroy');
 
 
     /**
