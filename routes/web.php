@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ACL\PermissionController;
+use App\Http\Controllers\Admin\ACL\PermissionProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
@@ -23,6 +24,12 @@ Route::get('/', function () {
 
 
 Route::prefix('admin')->group(function () {
+    /**
+     * Permission x Profile
+     */
+    Route::get('profiles/{id}/permissions', [PermissionProfileController::class, 'index'])->name('profiles.permissions.index');
+
+    
     /**
      * Route Permissions
      */

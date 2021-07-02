@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Perfis')
+@section('title', "Permissões do Perfil {$profile->name}")
 
 @section('content_header')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('profiles.index')}}">Perfis</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('profiles.index')}}">Permissões do Perfil {{$profile->name}}</a></li>
         </ol>
     </nav>
 
-    <h1>Perfis</h1>
+    <h1>Permissões do Perfil {{$profile->name}}</h1>
 @stop
 
 @section('content')
@@ -34,14 +34,14 @@
                     <th width="250">Ações</th>
                 </thead>
                 <tbody>
-                    @foreach ($profiles as $profile)
+                    @foreach ($permissions as $permission)
                         <tr>
-                            <td>{{$profile->name}}</td>
-                            <td>{{$profile->description}}</td>
+                            <td>{{$permission->name}}</td>
+                            <td>{{$permission->description}}</td>
                             <td>
-                                <a href="{{route('profiles.show', $profile->id)}}" class="btn btn-warning">Ver</a>
-                                <a href="{{route('profiles.edit', $profile->id)}}" class="btn btn-secondary">Editar</a>
-                                <a href="{{route('profiles.permissions', $profile->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a>
+                                {{-- <a href="{{route('profiles.permissions.show', $permission->id)}}" class="btn btn-warning">Ver</a>
+                                <a href="{{route('profiles.permissions.edit', $permission->id)}}" class="btn btn-secondary">Editar</a>
+                                <a href="{{route('profiles.permissions.permissions', $permission->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a> --}}
                             </td>
                         </tr>
                     @endforeach
@@ -49,7 +49,7 @@
             </table>
         </div>
         <div class="card-footer">
-            {{ isset($filters) ? $profiles->appends($filters)->links(): $profiles->links()}}
+            {{ isset($filters) ? $permissions->appends($filters)->links(): $permissions->links()}}
         </div>
     </div>
 @stop
