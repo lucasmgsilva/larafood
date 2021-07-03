@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-    <a href="{{route('profiles.create')}}" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Adicionar</a>
+    <a href="{{route('profiles.permissions.available', $profile->id)}}" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Adicionar</a>
 
     <div class="card">
         <div class="card-header">
@@ -31,7 +31,7 @@
                 <thead>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th width="250">Ações</th>
+                    <th width="50">Ações</th>
                 </thead>
                 <tbody>
                     @foreach ($permissions as $permission)
@@ -39,8 +39,8 @@
                             <td>{{$permission->name}}</td>
                             <td>{{$permission->description}}</td>
                             <td>
-                                {{-- <a href="{{route('profiles.permissions.show', $permission->id)}}" class="btn btn-warning">Ver</a>
-                                <a href="{{route('profiles.permissions.edit', $permission->id)}}" class="btn btn-secondary">Editar</a>
+                                <a href="{{route('profiles.permissions.detach', [$profile->id, $permission->id])}}" class="btn btn-danger">Remover</a>
+                                {{-- <a href="{{route('profiles.permissions.edit', $permission->id)}}" class="btn btn-secondary">Editar</a>
                                 <a href="{{route('profiles.permissions.permissions', $permission->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a> --}}
                             </td>
                         </tr>
