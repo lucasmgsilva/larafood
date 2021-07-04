@@ -1,20 +1,22 @@
 @extends('adminlte::page')
 
-@section('title', 'Perfis')
+@section('title', "Perfis do Plano {$plan->name}")
 
 @section('content_header')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="{{route('profiles.index')}}">Perfis</a></li>
+            <li class="breadcrumb-item"><a href="{{route('profiles.index')}}">Perfis</a></li>
+            <li class="breadcrumb-item active"><a href="{{route('plans.index')}}">Perfis do Plano {{$plan->name}}</a></li>
+            
         </ol>
     </nav>
 
-    <h1>Perfis</h1>
+    <h1>Perfis do Plano {{$plan->name}}</h1>
 @stop
 
 @section('content')
-    <a href="{{route('profiles.create')}}" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Adicionar</a>
+    <a href="{{route('plans.profiles.available', $plan->id)}}" class="btn btn-danger"><i class="fas fa-plus-circle"></i> Adicionar</a>
 
     <div class="card">
         <div class="card-header">
@@ -31,7 +33,7 @@
                 <thead>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th width="270">Ações</th>
+                    <th width="50">Ações</th>
                 </thead>
                 <tbody>
                     @foreach ($profiles as $profile)
@@ -39,10 +41,9 @@
                             <td>{{$profile->name}}</td>
                             <td>{{$profile->description}}</td>
                             <td>
-                                <a href="{{route('profiles.show', $profile->id)}}" class="btn btn-warning">Ver</a>
-                                <a href="{{route('profiles.edit', $profile->id)}}" class="btn btn-secondary">Editar</a>
-                                <a href="{{route('profiles.permissions.index', $profile->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a>
-                                <a href="{{route('profiles.plans', $profile->id)}}" class="btn btn-info"><i class="fas fa-list-alt"></i></a>
+                                <a href="{{route('profiles.profiles.detach', [$plan->id, $profile->id])}}" class="btn btn-danger">Remover</a>
+                                {{-- <a href="{{route('profiles.profiles.edit', $profile->id)}}" class="btn btn-secondary">Editar</a>
+                                <a href="{{route('profiles.profiles.profiles', $profile->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a> --}}
                             </td>
                         </tr>
                     @endforeach

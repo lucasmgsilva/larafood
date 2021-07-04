@@ -53,7 +53,7 @@ class PermissionProfileController extends Controller
         }
 
         if(!$request->permissions || count($request->permissions) == 0){
-            return redirect()->back()->with('error', 'Nenhuma permissão foi selecionada!');
+            return redirect()->back()->with('error', 'Nenhum plano foi selecionado!');
         }
 
         $profile->permissions()->attach($request->permissions);

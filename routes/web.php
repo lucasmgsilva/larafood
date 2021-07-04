@@ -25,6 +25,15 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     /**
+     * Permission x Profile
+     */
+
+    Route::get('plans/{id}/profiles/{idProfile}/detach', [PlanProfileController::class, 'detachProfilePlan'])->name('plans.profiles.detach');
+    Route::any('plans/{id}/profiles/create', [PlanProfileController::class, 'profilesAvailable'])->name('plans.profiles.available');
+    Route::get('plans/{id}/profiles', [PlanProfileController::class, 'index'])->name('plans.profiles.index');
+    Route::post('plans/{id}/profiles', [PlanProfileController::class, 'attachProfilesPlan'])->name('plans.profiles.attach');
+    
+    /**
      * Profile x Permission
      */
 
