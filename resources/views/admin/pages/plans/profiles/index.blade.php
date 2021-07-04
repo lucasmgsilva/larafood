@@ -41,7 +41,7 @@
                             <td>{{$profile->name}}</td>
                             <td>{{$profile->description}}</td>
                             <td>
-                                <a href="{{route('profiles.profiles.detach', [$plan->id, $profile->id])}}" class="btn btn-danger">Remover</a>
+                                <a href="{{route('plans.profiles.detach', [$plan->id, $profile->id])}}" class="btn btn-danger">Remover</a>
                                 {{-- <a href="{{route('profiles.profiles.edit', $profile->id)}}" class="btn btn-secondary">Editar</a>
                                 <a href="{{route('profiles.profiles.profiles', $profile->id)}}" class="btn btn-info"><i class="fas fa-lock"></i></a> --}}
                             </td>

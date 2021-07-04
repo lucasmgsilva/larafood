@@ -1,10 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\ACL\PermissionController;
-use App\Http\Controllers\Admin\ACL\PermissionProfileController;
-use App\Http\Controllers\Admin\ACL\ProfileController;
-use App\Http\Controllers\Admin\DetailPlanController;
-use App\Http\Controllers\Admin\PlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
 
 Route::prefix('admin')->group(function () {
     /**
@@ -90,4 +90,4 @@ Route::prefix('admin')->group(function () {
      * Route Dashboard
      */
     Route::get('admin', [PlanController::class, 'index'])->name('admin.index');
-});
+}

@@ -12,27 +12,28 @@ class PlanProfileController extends Controller
     private $plan, $profile;
 
     public function __construct(Plan $plan, Profile $profile) {
-        $this->Plan = $plan;
-        $this->Profile = $profile;
+        $this->plan = $plan;
+        $this->profile = $profile;
     }
 
     public function index($idPlan){
-        $plan = $this->Plan->find($idPlan);
+        $plan = $this->plan->find($idPlan);
 
+        dd($plan);
 
         if(!$plan){
             return redirect()->back();
         }
 
-        $profiles = $plan->Profiles()->paginate();
+        $profiles = $plan->profiles()->paginate();
 
-        return view('admin.pages.Plans.Profiles.index', compact('Plan', 'Profiles'));
+        return view('admin.pages.plans.profiles.index', compact('plan', 'profiles'));
     }
 
     public function ProfilesAvailable(Request $request, $idPlan){
         $filters = $request->except('_token');
         
-        $plan = $this->Plan->find($idPlan);
+        $plan = $this->plan->find($idPlan);
 
         if(!$plan){
             return redirect()->back();
@@ -40,31 +41,31 @@ class PlanProfileController extends Controller
         
         $profiles = $plan->ProfilesAvailable($request->filter);
 
-        return view('admin.pages.Plans.Profiles.available', compact('Plan', 'Profiles', 'filters'));
+        return view('admin.pages.Plans.Profiles.available', compact('plan', 'profiles', 'filters'));
     }
 
     public function attachProfilesPlan(Request $request, $idPlan)
     {
-        $plan = $this->Plan->find($idPlan);
+        $plan = $this->plan->find($idPlan);
 
 
         if(!$plan){
             return redirect()->back();
         }
 
-        if(!$request->Profiles || count($request->Profiles) == 0){
+        if(!$request->profiles || count($request->profiles) == 0){
             return redirect()->back()->with('error', 'Nenhuma permissão foi selecionada!');
         }
 
-        $plan->Profiles()->attach($request->Profiles);
+        $plan->Profiles()->attach($request->profiles);
         
-        return redirect()->route('Plans.Profiles.index', $idPlan);
+        return redirect()->route('plans.profiles.index', $idPlan);
     }
 
     public function detachProfilePlan($idPlan, $idProfile)
     {
-        $plan = $this->Plan->find($idPlan);
-        $profile = $this->Profile->find($idProfile);
+        $plan = $this->plan->find($idPlan);
+        $profile = $this->profile->find($idProfile);
 
         if(!$plan || !$profile){
             return redirect()->back();
@@ -72,11 +73,11 @@ class PlanProfileController extends Controller
 
         $plan->Profiles()->detach($profile);
 
-        return redirect()->route('Plans.Profiles.index', $idPlan);
+        return redirect()->route('plans.profiles.index', $idPlan);
     }
 
     public function Plans($idProfile){
-        $profile = $this->Profile->find($idProfile);
+        $profile = $this->profile->find($idProfile);
 
         if(!$profile){
             return redirect()->back();
