@@ -13,4 +13,16 @@ class SiteController extends Controller
 
         return view('site.pages.home.index', compact('plans'));
     }
+
+    public function plan($url){
+        $plan = Plan::where('url', $url)->first();
+
+        if(!$plan){
+            return redirect()->back();
+        }
+
+        session()->put('plan', $plan);
+        
+        return redirect()->route('register');
+    }
 }

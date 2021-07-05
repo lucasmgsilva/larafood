@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ACL\PermissionProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,7 +27,17 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/plan/{ul}', [SiteController::class, 'plan'])->name('plan.subscription');
+Route::get('/', [SiteController::class, 'index'])->name('site.home');
+
 Route::prefix('admin')->middleware('auth')->group(function () {
+    /**
+     * Route Users
+     */
+    Route::any('users/search', [UserController::class, 'search'])->name('users.search');
+    Route::resource('users', UserController::class);
+    
+    
     /**
      * Permission x Profile
      */
