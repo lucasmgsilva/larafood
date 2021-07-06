@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUpdateUserRequest;
-use App\Models\User;
+use App\Http\Requests\StoreUpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
     private $repository;
 
-    public function __construct(User $user) {
-        $this->repository = $user;
+    public function __construct(Category $category) {
+        $this->repository = $category;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->repository->tenantUser()->paginate();
+        $categories = $this->repository->latest()->paginate();
 
-        return view('admin.pages.users.index', compact('users'));
+        return view('admin.pages.categories.index', compact('categories'));
     }
 
     /**
@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.users.create');
+        return view('admin.pages.categories.index');
     }
 
     /**
@@ -43,16 +43,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUpdateUserRequest $request)
+    public function store(StoreUpdateCategoryRequest $request)
     {
-        $tenant = auth()->user()->tenant;
-        $data = $request->all();
-        $data['tenant_id'] = $tenant->id;
-        $data['password'] = bcrypt($data['password']);
-        
-        $this->repository->create($data);
+        $this->repository->create($request->all());
 
-        return redirect()->route('users.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -63,13 +58,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->repository->tenantUser()->find($id);
+        $category = $this->repository->find($id);
 
-        if(!$user){
+        if(!$category){
             return redirect()->back();
         }
 
-        return view('admin.pages.users.show', compact('user'));
+        return view('admin.pages.categories.show', compact('category'));
     }
 
     /**
@@ -80,13 +75,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->repository->tenantUser()->find($id);
+        $category = $this->repository->find($id);
 
-        if(!$user){
+        if(!$category){
             return redirect()->back();
         }
 
-        return view('admin.pages.users.edit', compact('user'));
+        return view('admin.pages.categories.show', compact('category'));
     }
 
     /**
@@ -96,23 +91,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUpdateUserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $user = $this->repository->tenantUser()->find($id);
+        $category = $this->repository->find($id);
 
-        if(!$user){
+        if(!$category){
             return redirect()->back();
         }
 
-        $data = $request->only('name', 'email');
+        $category->update($request->all());
 
-        if ($request->password){
-            $data['password'] = bcrypt($request->password);
-        }
-
-        $user->update();
-
-        return redirect()->route('users.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -123,15 +112,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->repository->tenantUser()->find($id);
+        $category = $this->repository->find($id);
 
-        if(!$user){
+        if(!$category){
             return redirect()->back();
         }
 
-        $user->delete();
+        $category->delete();
 
-        return redirect()->route('users.index');
+        return redirect()->route('categories.index');
     }
 
     public function search(Request $request){        
@@ -143,8 +132,11 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $users = $this->repository->where('name', 'LIKE', "%{$filter}%")->orWhere('email', 'LIKE', "%{$filter}%")->tenantUser()->paginate();
+        $categories = $this->repository->where(function ($query) use ($filter){
+            $query->where('name', 'LIKE', "%{$filter}%");
+            $query->orWhere('description', 'LIKE', "%{$filter}%");
+        })->paginate();
 
-        return view('admin.pages.users.index', compact('users', 'filters'));
+        return view('admin.pages.categories.index', compact('categories', 'filters'));
     }
 }

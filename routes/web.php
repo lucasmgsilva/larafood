@@ -32,6 +32,12 @@ Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     /**
+     * Route Categories
+     */
+    Route::any('categories/search', [CategoryController::class, 'search'])->name('categories.search');
+    Route::resource('categories', CategoryController::class);
+
+    /**
      * Route Users
      */
     Route::any('users/search', [UserController::class, 'search'])->name('users.search');
