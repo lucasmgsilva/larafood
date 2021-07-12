@@ -3,8 +3,11 @@
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\PermissionProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +34,21 @@ Route::get('/plan/{ul}', [SiteController::class, 'plan'])->name('plan.subscripti
 Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
+    /**
+     * Product x Category
+     */
+
+    Route::get('products/{id}/categories/{idCategory}/detach', [CategoryProductController::class, 'detachCategoryProduct'])->name('products.categories.detach');
+    Route::any('products/{id}/categories/create', [CategoryProductController::class, 'categoriesAvailable'])->name('products.categories.available');
+    Route::get('products/{id}/categories', [CategoryProductController::class, 'index'])->name('products.categories.index');
+    Route::post('products/{id}/categories', [CategoryProductController::class, 'attachCategoriesProduct'])->name('products.categories.attach');
+    
+    /**
+     * Route Products
+     */
+    Route::any('products/search', [ProductController::class, 'search'])->name('products.search');
+    Route::resource('products', ProductController::class);
+
     /**
      * Route Categories
      */

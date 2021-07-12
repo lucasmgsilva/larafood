@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.categories.index');
+        return view('admin.pages.categories.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class CategoryController extends Controller
             return redirect()->back();
         }
 
-        return view('admin.pages.categories.show', compact('category'));
+        return view('admin.pages.categories.edit', compact('category'));
     }
 
     /**
