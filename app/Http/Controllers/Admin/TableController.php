@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUpdateCategoryRequest;
-use App\Models\Category;
+use App\Http\Requests\StoreUpdateTableRequest;
+use App\Models\Table;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class TableController extends Controller
 {
     private $repository;
 
-    public function __construct(Category $category) {
-        $this->repository = $category;
+    public function __construct(Table $table) {
+        $this->repository = $table;
     }
 
     /**
@@ -22,9 +22,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->latest()->paginate();
+        $tables = $this->repository->latest()->paginate();
 
-        return view('admin.pages.categories.index', compact('categories'));
+        return view('admin.pages.tables.index', compact('tables'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.categories.create');
+        return view('admin.pages.tables.create');
     }
 
     /**
@@ -43,11 +43,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUpdateCategoryRequest $request)
+    public function store(StoreUpdateTableRequest $request)
     {
         $this->repository->create($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tables.index');
     }
 
     /**
@@ -58,13 +58,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = $this->repository->find($id);
+        $table = $this->repository->find($id);
 
-        if(!$category){
+        if(!$table){
             return redirect()->back();
         }
 
-        return view('admin.pages.categories.show', compact('category'));
+        return view('admin.pages.tables.show', compact('table'));
     }
 
     /**
@@ -75,13 +75,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->repository->find($id);
+        $table = $this->repository->find($id);
 
-        if(!$category){
+        if(!$table){
             return redirect()->back();
         }
 
-        return view('admin.pages.categories.edit', compact('category'));
+        return view('admin.pages.tables.edit', compact('table'));
     }
 
     /**
@@ -93,15 +93,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = $this->repository->find($id);
+        $table = $this->repository->find($id);
 
-        if(!$category){
+        if(!$table){
             return redirect()->back();
         }
 
-        $category->update($request->all());
+        $table->update($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tables.index');
     }
 
     /**
@@ -112,15 +112,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = $this->repository->find($id);
+        $table = $this->repository->find($id);
 
-        if(!$category){
+        if(!$table){
             return redirect()->back();
         }
 
-        $category->delete();
+        $table->delete();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tables.index');
     }
 
     public function search(Request $request){        
@@ -132,11 +132,11 @@ class CategoryController extends Controller
             return redirect()->back();
         }
 
-        $categories = $this->repository->where(function ($query) use ($filter){
+        $tables = $this->repository->where(function ($query) use ($filter){
             $query->where('name', 'LIKE', "%{$filter}%");
             $query->orWhere('description', 'LIKE', "%{$filter}%");
         })->paginate();
 
-        return view('admin.pages.categories.index', compact('categories', 'filters'));
+        return view('admin.pages.tables.index', compact('tables', 'filters'));
     }
 }

@@ -274,7 +274,13 @@ return [
         [
             'text' => 'Produtos',
             'url'  => 'admin/products',
-            'icon' => 'fas fa-layer-group',
+            'icon' => 'fas fa-hamburguer',
+            //'can'  => 'manage-blog',
+        ],
+        [
+            'text' => 'Mesas',
+            'url'  => 'admin/tables',
+            'icon' => 'fas fa-tablet',
             //'can'  => 'manage-blog',
         ],
         /*[
