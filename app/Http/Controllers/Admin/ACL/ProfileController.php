@@ -15,6 +15,8 @@ class ProfileController extends ControllersController
 
     public function __construct(Profile $profile) {
         $this->repository = $profile;
+
+        $this->middleware(['can:Perfis']);
     }
     
     /**

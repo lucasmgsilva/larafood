@@ -226,62 +226,68 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'navbar-search',
+        //     'text'         => 'search',
+        //     'topnav_right' => true,
+        // ],
+        // [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
 
-        // Sidebar items:
+        // // Sidebar items:
+        // [
+        //     'type' => 'sidebar-menu-search',
+        //     'text' => 'search',
+        // ],
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Empresas',
+            'url'  => 'admin/tenants',
+            'icon' => 'fas fa-building',
+            'can'  => 'Empresas',
         ],
         [
             'text' => 'Planos',
             'url'  => 'admin/plans',
             'icon' => 'fas fa-list-alt',
-            //'can'  => 'manage-blog',
+            'can'  => 'Planos',
         ],
         [
             'text' => 'Perfis',
             'url'  => 'admin/profiles',
             'icon' => 'fas fa-address-book',
-            //'can'  => 'manage-blog',
+            'can'  => 'Perfis',
         ],
         [
             'text' => 'Permissões',
             'url'  => 'admin/permissions',
             'icon' => 'fas fa-lock',
-            //'can'  => 'manage-blog',
+            'can'  => 'Permissões',
         ],
         [
             'text' => 'Usuários',
             'url'  => 'admin/users',
             'icon' => 'fas fa-users',
-            //'can'  => 'manage-blog',
+            'can'  => 'Usuários',
         ],
         [
             'text' => 'Categorias',
             'url'  => 'admin/categories',
             'icon' => 'fas fa-layer-group',
-            //'can'  => 'manage-blog',
+            'can'  => 'Categorias',
         ],
         [
             'text' => 'Produtos',
             'url'  => 'admin/products',
             'icon' => 'fas fa-hamburguer',
-            //'can'  => 'manage-blog',
+            'can'  => 'Produtos',
         ],
         [
             'text' => 'Mesas',
             'url'  => 'admin/tables',
             'icon' => 'fas fa-tablet',
-            //'can'  => 'manage-blog',
+            'can'  => 'Mesas',
         ],
         /*[
             'text' => 'blog',

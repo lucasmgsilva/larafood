@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\PermissionProfileController;
+use App\Http\Controllers\Admin\ACL\PlanProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryProductController;
@@ -35,6 +36,7 @@ Route::get('/plan/{ul}', [SiteController::class, 'plan'])->name('plan.subscripti
 Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
+
     /**
     * Route Tables
     */
@@ -67,7 +69,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
      */
     Route::any('users/search', [UserController::class, 'search'])->name('users.search');
     Route::resource('users', UserController::class);
-    
     
     /**
      * Permission x Profile

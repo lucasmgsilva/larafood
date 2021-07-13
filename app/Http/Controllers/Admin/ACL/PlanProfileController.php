@@ -19,8 +19,6 @@ class PlanProfileController extends Controller
     public function index($idPlan){
         $plan = $this->plan->find($idPlan);
 
-        dd($plan);
-
         if(!$plan){
             return redirect()->back();
         }

@@ -11,6 +11,6 @@ class Table extends Model
     use HasFactory;
     use TenantTrait;
 
-    protected $fillable = ['identify', 'description']
+    protected $fillable = ['identify', 'description'];
 
 }
