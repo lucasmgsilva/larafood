@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Services\TenantService;
+use App\Tenant\Events\TenantCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,7 @@ class RegisteredUserController extends Controller
         $tenantService = app(TenantService::class);
 
         $user = $tenantService->make($plan, $request);
+        event(new TenantCreated($user));
 
         event(new Registered($user));
 

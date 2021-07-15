@@ -2,14 +2,18 @@
 
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\PermissionProfileController;
+use App\Http\Controllers\Admin\ACL\PermissionRoleController;
 use App\Http\Controllers\Admin\ACL\PlanProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
+use App\Http\Controllers\Admin\ACL\RoleController;
+use App\Http\Controllers\Admin\ACL\RoleUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TableController;
+use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +40,37 @@ Route::get('/plan/{ul}', [SiteController::class, 'plan'])->name('plan.subscripti
 Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
+    /**
+     * Role x User
+     */
+
+    Route::get('users/{id}/roles/{idPermission}/detach', [RoleUserController::class, 'detachRoleUser'])->name('users.roles.detach');
+    Route::any('users/{id}/roles/create', [RoleUserController::class, 'rolesAvailable'])->name('users.roles.available');
+    Route::get('users/{id}/roles', [RoleUserController::class, 'index'])->name('users.roles.index');
+    Route::post('users/{id}/roles', [RoleUserController::class, 'attachRolesUser'])->name('users.roles.attach');
+    Route::get('roles/{id}/user', [RoleUserController::class, 'users'])->name('roles.users');
+
+    /**
+     * Permission x Role
+     */
+
+    Route::get('roles/{id}/permissions/{idPermission}/detach', [PermissionRoleController::class, 'detachPermissionRole'])->name('roles.permissions.detach');
+    Route::any('roles/{id}/permissions/create', [PermissionRoleController::class, 'permissionsAvailable'])->name('roles.permissions.available');
+    Route::get('roles/{id}/permissions', [PermissionRoleController::class, 'index'])->name('roles.permissions.index');
+    Route::post('roles/{id}/permissions', [PermissionRoleController::class, 'attachCategoriesProduct'])->name('roles.permissions.attach');
+    Route::get('permissions/{id}/role', [PermissionRoleController::class, 'roles'])->name('permissions.roles');
+    
+    /**
+     * Route Roles
+     */
+    Route::any('roles/search', [RoleController::class, 'search'])->name('roles.search');
+    Route::resource('roles', RoleController::class);
+
+    /**
+    * Route Tenants
+    */
+    Route::any('tenants/search', [TenantController::class, 'search'])->name('tenants.search');
+    Route::resource('tenants', TenantController::class);
 
     /**
     * Route Tables

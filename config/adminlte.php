@@ -260,6 +260,12 @@ return [
             'can'  => 'Perfis',
         ],
         [
+            'text' => 'Cargos',
+            'url'  => 'admin/roles',
+            'icon' => 'fas fa-address-card',
+            'can'  => 'Cargos',
+        ],
+        [
             'text' => 'Permissões',
             'url'  => 'admin/permissions',
             'icon' => 'fas fa-lock',

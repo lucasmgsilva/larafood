@@ -59,4 +59,24 @@ class User extends Authenticatable
     {
         return $query->where('tenant_id', auth()->user()->tenant_id);
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+    
+    public function permissionsAvailable($filter = null){
+        $roles = Role::whereNotIn('roles.id', 
+            function($query) {
+                $query->select('role_user.role_id');
+                $query->from('role_user');
+                $query->whereRaw("role_user.user_id = $this->id");
+            }
+        )->where(function($queryFilter) use ($filter) {
+            if($filter){
+                $queryFilter->where('roles.name', 'LIKE', "%{$filter}%");
+            }
+        })->paginate();
+
+        return $roles;
+    }
 }
